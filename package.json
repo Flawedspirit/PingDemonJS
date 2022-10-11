@@ -1,0 +1,27 @@
+{
+  "name": "pingdemon",
+  "version": "1.0.0",
+  "description": "A bot to alert people when a specific streamer is live",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "docs": "jsdoc -c .jsdoc.json"
+  },
+  "keywords": [],
+  "author": "Flawedspirit",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^1.3.0",
+    "@discordjs/rest": "^1.3.0",
+    "axios": "^1.1.2",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.12",
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.6.11",
+    "jsdoc-template": "github:braintree/jsdoc-template",
+    "nodemon": "^2.0.20"
+  }
+}
