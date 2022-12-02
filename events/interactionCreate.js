@@ -5,10 +5,14 @@ module.exports = {
     name: 'interactionCreate',
     once: true,
     async execute(interaction) {
-        if (!interaction.isCommand()) ReactionUserManager;
+        if (!interaction.isCommand()) return;
 
         const command = interaction.client.commands.get(interaction.commandName);
         if (!command) return;
+
+        if (interaction.isButton) {
+            console.log(interaction);
+        }
 
         try {
             await command.execute(interaction);
