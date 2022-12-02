@@ -1,9 +1,4 @@
 class PicartoAPI {
-
-    static async getApiReturnDebug(input) {
-
-    }
-
     static async getApiReturn(input) {
         const apiUrl = "https://api.picarto.tv/api/v1/channel/name/";
 
