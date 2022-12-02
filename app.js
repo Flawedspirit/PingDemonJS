@@ -1,11 +1,11 @@
 /* REQUIRE NODE 16.9.0+ TO USE THE BOT */
-if (parseFloat(process.versions.node) < 16.9) throw new Error('Incompatible Node.js version. Please use version 16.9.0 or higher.');
+if (parseFloat(process.versions.node) < 18) throw new Error('Incompatible Node.js version. Please use version 18.0.0 or higher.');
 
 /* REQUIRED DEPENDENCIES */
-const { Client, GatewayIntentBits, Collection, ReactionUserManager } = require('discord.js');
+const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const Logger = require(path.join(__dirname, 'Logger.js'));
+const Logger = require('./Logger.js');
 
 /* CONFIGURATION FILE */
 require('dotenv').config();

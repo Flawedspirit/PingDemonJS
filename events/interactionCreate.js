@@ -1,3 +1,6 @@
+const { Collection } = require('discord.js');
+const cooldowns = new Map();
+
 module.exports = {
     name: 'interactionCreate',
     once: true,

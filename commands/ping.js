@@ -22,6 +22,7 @@ const responses = [
 ];
 
 module.exports = {
+    cooldown: 5,
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription("Pings the bot to make sure it's paying attention."),
