@@ -18,7 +18,7 @@ module.exports = {
 
             let isOnline = out.online ? "ONLINE" : "OFFLINE";
 
-            const outputEmbed = new EmbedBuilder()
+            const base = new EmbedBuilder()
                 .setColor(0x35a775)
                 .setTitle(out.name)
                 .setDescription(out.title)
@@ -29,8 +29,21 @@ module.exports = {
                     { name: "Followers", value: `${out.followers}`, inline: true },
                     { name: "Watching", value: `${out.viewers}`, inline: true }
                 )
+                .setImage(out.thumbnails.web);
+            const btnRow = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setCustomId('register')
+                    .setLabel("Notify Me!")
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId('unregister')
+                    .setLabel("Don't Notify Me!")
+                    .setStyle(ButtonStyle.Danger)
+                    .setDisabled(true)
+            );
             interaction.reply({
-                embeds: [outputEmbed],
+                embeds: [base],
+                components: [btnRow],
                 ephemeral: true
             });
         })
