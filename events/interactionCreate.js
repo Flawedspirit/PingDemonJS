@@ -5,7 +5,7 @@ module.exports = {
     name: 'interactionCreate',
     once: true,
     async execute(interaction) {
-        if (!interaction.isCommand()) ReactionUserManager;
+        if (!interaction.isChatInputCommand()) return;
 
         const command = interaction.client.commands.get(interaction.commandName);
         if (!command) return;
