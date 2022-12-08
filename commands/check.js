@@ -1,22 +1,28 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const PicartoApi = require('../PicartoAPI.js');
+const App = require('../app.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('check')
         .setDescription("Enter a Picarto streamer to see if they are live.")
         .addStringOption(option => option.setName('username')
-            .setDescription("The streamer\'s Picarto username to check.")
+            .setDescription("The streamer's Picarto username to check.")
             .setRequired(true)
         ),
-    async execute(interaction) {
-        let input = interaction.options.getString('username');
+    async execute (interaction) {
+        const input = interaction.options.getString('username');
+
 
         PicartoApi.getApiReturn(input).then(function (out) {
             if (process.env.ENV === "development") interaction.client.logger.logDebug(JSON.stringify(out));
 
-            let isOnline = out.online ? "ONLINE" : "OFFLINE";
+            if (out === "Channel does not exist") {
+                // Send error message and return somehow
+            }
+
+            const isOnline = out.online ? "🔴 ONLINE" : "OFFLINE";
 
             const base = new EmbedBuilder()
                 .setColor(0x35a775)
@@ -34,18 +40,13 @@ module.exports = {
                 new ButtonBuilder()
                     .setCustomId('register')
                     .setLabel("Notify Me!")
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId('unregister')
-                    .setLabel("Don't Notify Me!")
-                    .setStyle(ButtonStyle.Danger)
-                    .setDisabled(true)
+                    .setStyle(ButtonStyle.Success)
             );
             interaction.reply({
                 embeds: [base],
                 components: [btnRow],
                 ephemeral: true
             });
-        })
+        });
     }
 };

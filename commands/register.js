@@ -7,7 +7,7 @@ module.exports = {
             .setDescription('The streamer\'s Picarto username to watch.')
             .setRequired(true)
         ),
-    async execute(interaction) {
+    async execute (interaction) {
 
         // Actual fun stuff here
 

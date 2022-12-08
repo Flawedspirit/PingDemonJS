@@ -7,7 +7,7 @@ require('dotenv').config();
 
 module.exports = {
     name: 'ready',
-    execute(client, commandData) {
+    execute (client, commandData) {
         const clientId = client.user.id;
 
         const rest = new REST({
@@ -34,4 +34,4 @@ module.exports = {
             client.logger.log(`I have successfully started; joining as ${client.user.tag}.`, 'blueBright');
         })();
     }
-}
+};

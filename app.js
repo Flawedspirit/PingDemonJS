@@ -49,4 +49,26 @@ for (const file of eventFiles) {
     }
 }
 
+async function handleError (interaction, error) {
+    if (error) {
+        interaction.client.logger.logError(error.stack);
+        await interaction.reply({ content: `Ow! Something went wrong executing that command! Please let an admin know this happened:\n\`\`\`${error.stack}\`\`\``, ephemeral: true });
+    }
+}
+exports.handleError = handleError;
+
+// /* INITIALIZE COMPONENTS */
+// client.buttons = new Collection();
+// const componentData = [];
+
+// const componentDir = path.join(__dirname, 'components');
+// const componentFiles = fs.readdirSync(componentDir).filter(file => file.endsWith('.js'));
+
+// for (const file of componentFiles) {
+//     const component = require(path.join(componentDir, `${file}`));
+//     componentData.push(component.data.toJSON());
+//     client.component.set(component.data.name, component);
+//     client.logger.log(`Registered component: ${command.data.name}`);
+// }
+
 client.login(token);

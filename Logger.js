@@ -13,16 +13,16 @@ class Logger {
      * @param {Boolean} logTimestamps Whether a timestamp should be displayed.
      * @param {String} color A [valid chalk color]{@link https://github.com/chalk/chalk#colors} to use for log output. Defaults to white.
      */
-    constructor(logTimestamps, color) {
+    constructor (logTimestamps, color) {
         this.logTimestamps = !!logTimestamps;
         this.color = color;
     }
 
-    get timestamp() {
+    get timestamp () {
         return this.logTimestamps === true ? chalk.whiteBright.bold(`[${new Date().toLocaleString()}] `) : '';
     }
 
-    isValidColor(color) {
+    isValidColor (color) {
         return typeof chalk[color] === 'function';
     }
 
@@ -32,7 +32,7 @@ class Logger {
      * @param {string} message Log message
      * @param {string} [color = "whiteBright"] A [valid chalk color]{@link https://github.com/chalk/chalk#colors}
      */
-    log(message, color = "whiteBright") {
+    log (message, color = "whiteBright") {
         return console.log(this.timestamp + (color ? chalk[color](message) : message));
     }
 
@@ -42,7 +42,7 @@ class Logger {
      * @param {string} message Log message
      * @param {string} [color = 'whiteBright'] A [valid chalk color]{@link https://github.com/chalk/chalk#colors}
      */
-    logBold(message, color = "whiteBright") {
+    logBold (message, color = "whiteBright") {
         return console.log(this.timestamp + (color ? chalk.bold[color](message) : chalk.bold(message)));
     }
 
@@ -53,7 +53,7 @@ class Logger {
      * @param {string} message Log message
      * @param {string} [header] [header="DEBUG"] A custom header message before output
      */
-    logDebug(message, header = 'DEBUG') {
+    logDebug (message, header = 'DEBUG') {
         return console.log(this.timestamp + chalk.white(`[${header}] ` + message));
     }
 
@@ -64,7 +64,7 @@ class Logger {
      * @param {string} message Log message
      * @param {string} [header] [header="DEBUG"] A custom header message before output
      */
-    logError(message, header = 'ERROR') {
+    logError (message, header = 'ERROR') {
         return console.log(this.timestamp + chalk.bgRed.black(`[${header}] ` + message));
     }
 
@@ -75,7 +75,7 @@ class Logger {
      * @param {string} message Log message
      * @param {string} [header] [header="DEBUG"] A custom header message before output
      */
-    logWarn(message, header = 'WARN') {
+    logWarn (message, header = 'WARN') {
         return console.log(this.timestamp + chalk.bgYellow.black(`[${header}] ` + message));
     }
 }
