@@ -3,7 +3,7 @@ const App = require('../app.js');
 
 module.exports = {
     name: 'interactionCreate',
-    once: true,
+    once: false,
     async execute (interaction) {
         if (interaction.isChatInputCommand()) {
             const command = interaction.client.commands.get(interaction.commandName);
@@ -12,7 +12,7 @@ module.exports = {
             try {
                 await command.execute(interaction);
             } catch (err) {
-                handleError(interaction, err);
+                App.handleError(interaction, err);
             }
         } else if (interaction.isButton()) {
             try {

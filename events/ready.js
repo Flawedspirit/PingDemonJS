@@ -7,6 +7,7 @@ require('dotenv').config();
 
 module.exports = {
     name: 'ready',
+    once: true,
     execute (client, commandData) {
         const clientId = client.user.id;
 
