@@ -1,6 +1,7 @@
 /* REQUIRED DEPENDENCIES */
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v10");
+const PicartoApi = require('../PicartoAPI.js');
 
 /* CONFIGURATION FILE */
 require('dotenv').config();
@@ -30,6 +31,8 @@ module.exports = {
             } catch (err) {
                 if (err) client.logger.logError(err.stack);
             }
+
+            // PicartoApi.PingPicarto(client);
 
             client.logger.log(`I have successfully started; joining as ${client.user.tag}.`, 'blueBright');
         })();

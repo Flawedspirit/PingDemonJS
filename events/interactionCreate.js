@@ -1,5 +1,5 @@
-const { Collection } = require('discord.js');
-const cooldowns = new Map();
+const PicartoAPI = require('../PicartoAPI.js');
+const App = require('../app.js');
 
 module.exports = {
     name: 'interactionCreate',

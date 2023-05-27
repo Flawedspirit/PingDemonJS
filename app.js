@@ -6,6 +6,7 @@ const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const Logger = require('./Logger.js');
+const PicartoAPI = require('./PicartoAPI.js');
 
 /* CONFIGURATION FILE */
 require('dotenv').config();
@@ -49,4 +50,41 @@ for (const file of eventFiles) {
     }
 }
 
+async function handleError (interaction, error) {
+    if (error) {
+        interaction.client.logger.logError(error.stack);
+        await interaction.reply({ content: `Ow! Something went wrong executing that command! Please let an admin know this happened:\n\`\`\`${error.stack}\`\`\``, ephemeral: true });
+    }
+}
+exports.handleError = handleError;
+
+/* RUN MAIN SYSTEM LOOP */
+async function pingAPI() {
+    let rate = process.env.API_WAIT_SECONDS * 1000;
+    rate = Math.max(rate, 2500); // Clamp lower value of rate to 2.5 seconds  to avoid hitting rate limit
+
+    setInterval(async () => {
+        try {
+            PicartoAPI.PingPicarto(client, "kazerad");
+        } catch (error) {
+            console.error("Error occurred while logging: ", error);
+        }
+    }, rate);
+}
+
+// /* INITIALIZE COMPONENTS */
+// client.buttons = new Collection();
+// const componentData = [];
+
+// const componentDir = path.join(__dirname, 'components');
+// const componentFiles = fs.readdirSync(componentDir).filter(file => file.endsWith('.js'));
+
+// for (const file of componentFiles) {
+//     const component = require(path.join(componentDir, `${file}`));
+//     componentData.push(component.data.toJSON());
+//     client.component.set(component.data.name, component);
+//     client.logger.log(`Registered component: ${command.data.name}`);
+// }
+
 client.login(token);
+pingAPI();
