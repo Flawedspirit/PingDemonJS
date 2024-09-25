@@ -61,8 +61,8 @@ for(const file of eventFiles) {
 }
 
 async function pingAPI() {
-    // Clamp pingRate to at least 2.5 sec to avoid running into API limits.
-    let rate = Math.max(pingRate * 1000, 2500);
+    // Clamp pingRate to at least 5 sec to avoid running into API limits.
+    let rate = Math.max(pingRate, 5) * 1000;
 
     let currentState = new Collection();
     let notifiedOf = [];
