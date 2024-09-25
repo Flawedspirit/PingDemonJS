@@ -1,0 +1,17 @@
+{
+    "token": "",
+    "clientId": "1028418354660253747",
+    "inviteLink": "https://discord.com/oauth2/authorize?client_id=1028418354660253747",
+    "notify": {
+        "picarto": [
+            ["<user>", "<roleid_to_ping>"]
+        ],
+        "piczel": [
+            ["<user>", "<roleid_to_ping>"]
+        ]
+    },
+    "notifyChannel": "<channelid_to_ping>",
+    "pingRate": 10,
+    "logTimestamps": true,
+    "debug": false
+}

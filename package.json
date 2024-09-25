@@ -1,0 +1,18 @@
+{
+  "name": "ping-demon",
+  "version": "1.0.0",
+  "description": "I ping people when that one streamer they like goes live.",
+  "main": "./app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Flawedspirit",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "discord.js": "^14.16.2"
+  },
+  "devDependencies": {
+    "eslint": "^9.10.0"
+  }
+}
