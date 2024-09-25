@@ -4,7 +4,8 @@
   "description": "I ping people when that one streamer they like goes live.",
   "main": "./app/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app/app.js",
+    "gen-docs": "./node_modules/.bin/jsdoc -c .jsdoc.json --verbose"
   },
   "author": "Flawedspirit",
   "license": "GPL-3.0-or-later",
@@ -13,6 +14,7 @@
     "discord.js": "^14.16.2"
   },
   "devDependencies": {
-    "eslint": "^9.10.0"
+    "eslint": "^9.10.0",
+    "jsdoc": "^4.0.3"
   }
 }
