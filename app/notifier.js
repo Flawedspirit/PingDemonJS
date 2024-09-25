@@ -1,6 +1,15 @@
 const { EmbedBuilder } = require('discord.js');
 
+/**
+ * @class
+ * @classdesc Utility for constructing Discord notification embeds.
+ */
 class Notifier {
+    /**
+     * Constructs and returns a Picarto ping embed
+     * @param {Object} data A JSON object of stream data returned from the API.
+     * @returns {EmbedBuilder}
+     */
     static picartoEmbed(data) {
         let isOnline = data.online ? ":red_circle: ONLINE" : "OFFLINE";
 
@@ -19,6 +28,11 @@ class Notifier {
         return embed;
     }
 
+    /**
+     * Constructs and returns a Piczel ping embed
+     * @param {Object} data A JSON object of stream data returned from the API.
+     * @returns {EmbedBuilder}
+     */
     static piczelEmbed(data) {
         let isOnline = data.data[0]['live'] ? ":red_circle: ONLINE" : "OFFLINE";
 
