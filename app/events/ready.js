@@ -4,6 +4,6 @@ module.exports = {
     name: Events.ClientReady,
     once: true,
     execute(client) {
-        client.logger.log(`${client.user.tag} is now ready!`);
+        client.logger.log(`${client.user.tag} is now ready!`, 'green');
     }
 };

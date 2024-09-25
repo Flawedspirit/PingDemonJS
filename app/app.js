@@ -39,7 +39,7 @@ for(const dir of commandDirs) {
         if('data' in command && 'execute' in command) {
             client.commands.set(command.data.name, command)
         } else {
-            client.logger.logWarn(`[WARN] The command at ${filePath} is missing a required "data" or "execute" property.`);
+            client.logger.logWarn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
         }
     }
 }
@@ -79,8 +79,15 @@ async function pingAPI() {
                         // Notify everyone here
                         client.channels.fetch(notifyChannel).then(channel => {
                             // Ping users with the supplied role IDs of each streamer
-                            channel.send({ content: `<@&${notify.picarto[user][1]}>`, embeds: [Notifier.picartoEmbed(status)] });
-                        }).catch(console.error);
+                            try {
+                                client.logger.log(`${status.name} is now online.`);
+                                channel.send({ content: `<@&${notify.picarto[user][1]}>`, embeds: [Notifier.picartoEmbed(status)] });
+                            } catch(error) {
+                                client.logger.logError(error);
+                            }
+                        }).catch((error) => {
+                            client.logger.logError(error);
+                        });
 
                         notifiedOf.push(status.name);
                     } else {
@@ -88,7 +95,7 @@ async function pingAPI() {
                             const toRemove = notifiedOf.indexOf(status.name);
                             if(toRemove !== -1) {
                                 notifiedOf.splice(toRemove, 1);
-                                client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
+                                if(debug) client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
                             }
                         }
                     }
@@ -104,8 +111,15 @@ async function pingAPI() {
                         // Notify everyone here
                         client.channels.fetch(notifyChannel).then(channel => {
                             // Ping users with the supplied role IDs of each streamer
-                            channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)] });
-                        }).catch(console.error);
+                            try {
+                                client.logger.log(`${status.name} is now online.`);
+                                channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)] });
+                            } catch(error) {
+                                client.logger.logError(error);
+                            }
+                        }).catch((error) => {
+                            client.logger.logError(error);
+                        });
 
                         notifiedOf.push(status.name);
                     } else {
@@ -113,7 +127,7 @@ async function pingAPI() {
                             const toRemove = notifiedOf.indexOf(status.name);
                             if(toRemove !== -1) {
                                 notifiedOf.splice(toRemove, 1);
-                                client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
+                                if(debug) client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
                             }
                         }
                     }
