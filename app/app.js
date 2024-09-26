@@ -6,7 +6,7 @@ const { debug, logTimestamps, notify, notifyChannel, pingRate, token } = require
 const Logger = require('./logger.js');
 const Notifier = require('./notifier.js');
 const PicartoAPI = require('./picartoAPI.js');
-const PiczelAPI = require('./picartoAPI.js');
+const PiczelAPI = require('./piczelAPI.js');
 
 // Create new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -105,14 +105,16 @@ async function pingAPI() {
             // PICZEL
             for(let user in notify.piczel) {
                 await PiczelAPI.getAPIReturn(notify.piczel[user][0]).then((status) => {
-                    currentState.set(status.name, {'name': status.name, 'isOnline': status.online});
+                    currentState.set(status.data[0]['slug'], {'name': status.data[0]['slug'], 'isOnline': status.data[0]['live']});
 
-                    if(!notifiedOf.includes(status.name) && status.online === true) {
+                    console.log(status.data[0]['slug']);
+
+                    if(!notifiedOf.includes(status.data[0]['slug']) && status.data[0]['live'] === true) {
                         // Notify everyone here
                         client.channels.fetch(notifyChannel).then(channel => {
                             // Ping users with the supplied role IDs of each streamer
                             try {
-                                client.logger.log(`${status.name} is now online.`);
+                                client.logger.log(`${status.data[0]['slug']} is now online.`);
                                 channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)] });
                             } catch(error) {
                                 client.logger.logError(error);
@@ -121,13 +123,13 @@ async function pingAPI() {
                             client.logger.logError(error);
                         });
 
-                        notifiedOf.push(status.name);
+                        notifiedOf.push(status.data[0]['slug']);
                     } else {
-                        if(status.online === false) {
+                        if(status.data[0]['live'] === false) {
                             const toRemove = notifiedOf.indexOf(status.name);
                             if(toRemove !== -1) {
                                 notifiedOf.splice(toRemove, 1);
-                                if(debug) client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
+                                if(debug) client.logger.logDebug(`We have removed ${status.data[0]['slug']} from notifiedOf[]`);
                             }
                         }
                     }
