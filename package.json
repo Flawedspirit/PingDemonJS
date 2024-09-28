@@ -1,6 +1,6 @@
 {
   "name": "ping-demon",
-  "version": "1.0.0",
+  "version": "1.1.5",
   "description": "I ping people when that one streamer they like goes live.",
   "main": "./app/app.js",
   "scripts": {
@@ -16,5 +16,8 @@
   "devDependencies": {
     "eslint": "^9.10.0",
     "jsdoc": "^4.0.3"
+  },
+  "engines": {
+    "node": ">= 18.17"
   }
 }

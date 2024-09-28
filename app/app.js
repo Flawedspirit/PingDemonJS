@@ -1,3 +1,6 @@
+// Halt and catch fire if minimum node version is not met
+if(parseFloat(process.versions.node) < 18.17) throw new Error('Incompatible Node.js version. Please use version 18.17 or higher.');
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
