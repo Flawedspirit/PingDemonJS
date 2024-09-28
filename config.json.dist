@@ -1,7 +1,5 @@
 {
-    "token": "",
-    "clientId": "1028418354660253747",
-    "inviteLink": "https://discord.com/oauth2/authorize?client_id=1028418354660253747",
+    "token": "<bot_token>",
     "notify": {
         "picarto": [
             ["<user>", "<roleid_to_ping>"]
