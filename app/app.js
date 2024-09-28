@@ -18,16 +18,16 @@ client.cooldowns = new Collection();
 client.logger = new Logger(logTimestamps);
 
 // Command handling here
-const commandDirPath = path.join(__dirname, 'commands');
-const commandDirs = fs.readdirSync(commandDirPath);
+client.commandDirPath = path.join(__dirname, 'commands');
+const commandDirs = fs.readdirSync(client.commandDirPath);
 
 if(debug) {
-    client.logger.logDebug(`Command directory: ${commandDirPath}`);
+    client.logger.logDebug(`Command directory: ${client.commandDirPath}`);
     client.logger.logDebug(`Command types: ${commandDirs}`);
 }
 
 for(const dir of commandDirs) {
-    const commandPath = path.join(commandDirPath, dir);
+    const commandPath = path.join(client.commandDirPath, dir);
     const commandFiles = fs.readdirSync(commandPath).filter(file => file.endsWith('.js'));
 
     for(const file of commandFiles) {
