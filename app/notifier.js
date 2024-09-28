@@ -13,6 +13,7 @@ class Notifier {
     static picartoEmbed(data) {
         let isOnline = data.online ? ":red_circle: ONLINE" : "OFFLINE";
         let matureContent = data.adult ? "Mature content" : "Safe content";
+        let time = Date.now();
 
         let embed = new EmbedBuilder()
             .setColor(0x35a775)
@@ -25,7 +26,7 @@ class Notifier {
                 { name: "Followers", value: `${data.followers}`, inline: true },
                 { name: "Watching", value: `${data.viewers}`, inline: true }
             )
-            .setImage(data.thumbnails.web)
+            .setImage(`${data.thumbnails.web}?t=${time}`)
             .setFooter({ text: `${matureContent} | ${data.category[0]}` });
         return embed;
     }
@@ -38,6 +39,7 @@ class Notifier {
     static piczelEmbed(data) {
         let isOnline = data.data[0]['live'] ? ":red_circle: ONLINE" : "OFFLINE";
         let matureContent = data.data[0]['adult'] ? "Mature content" : "Safe content";
+        let time = Date.now();
 
         let embed = new EmbedBuilder()
             .setColor(0x09a5c9)
@@ -50,7 +52,7 @@ class Notifier {
                 { name: "Followers", value: `${data.data[0]['follower_count']}`, inline: true },
                 { name: "Watching", value: `${data.data[0]['viewers']}`, inline: true }
             )
-            .setImage(data.data[0]['preview']['url'])
+            .setImage(`${data.data[0]['preview']['url']}?t=${time}`)
             .setFooter({ text: matureContent });
         return embed;
     }
