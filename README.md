@@ -3,7 +3,7 @@
 
 (Twitch and Youtube support coming Soon™️)
 
-![Static Badge](https://img.shields.io/badge/Ping%20Demon-1.1.5-darkred)
+![Static Badge](https://img.shields.io/badge/Ping%20Demon-1.1.6-darkred)
 
 ### Getting Started
 **Note:** This guide assumes you are familiar with the concept of creating a Discord application, as well as developer mode in Discord.

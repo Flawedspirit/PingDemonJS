@@ -113,8 +113,6 @@ async function pingAPI() {
                     await PiczelAPI.getAPIReturn(notify.piczel[user][0]).then((status) => {
                         currentState.set(status.data[0]['slug'], {'name': status.data[0]['slug'], 'isOnline': status.data[0]['live']});
 
-                        console.log(status.data[0]['slug']);
-
                         if(!notifiedOf.includes(status.data[0]['slug']) && status.data[0]['live'] === true) {
                             // Notify everyone here
                             client.channels.fetch(notifyChannel).then(channel => {
