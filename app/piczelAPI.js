@@ -8,13 +8,5 @@ class PiczelAPI {
 
         return response.json();
     }
-
-    static async PingPiczel (name) {
-        PiczelAPI.getAPIReturn(name).then(function (out) {
-            if (out.status.toString() !== 'error') {
-                return out;
-            }
-        });
-    }
 }
 module.exports = PiczelAPI;

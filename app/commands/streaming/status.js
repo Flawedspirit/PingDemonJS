@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const Notifier = require('../../notifier.js');
 const PicartoAPI = require('../../picartoAPI.js');
 const PiczelAPI = require('../../piczelAPI.js');
+const TwitchAPI = require('../../twitchAPI.js');
 
 module.exports = {
     cooldown: 10,
@@ -9,11 +10,12 @@ module.exports = {
         .setName('status')
         .setDescription('Enter a streamer to see if they\'re live.')
         .addStringOption(option => option.setName('service')
-            .setDescription("The streaming service to check. Available options: Picarto, Piczel")
+            .setDescription("The streaming service to check. Available options: Picarto, Piczel, Twitch")
             .setRequired(true)
             .addChoices(
                 { name: 'Picarto', value: 'picarto' },
-                { name: 'Piczel', value: 'piczel' }
+                { name: 'Piczel', value: 'piczel' },
+                { name: 'Twitch', value: 'twitch' }
             ))
         .addStringOption(option => option.setName('username')
             .setDescription("The username or channel name to check.")
@@ -39,9 +41,17 @@ module.exports = {
                     });
                 });
                 break;
+            case 'twitch':
+                await TwitchAPI.getAPIReturn(user).then((out) => {
+                    interaction.reply({
+                        embeds: [Notifier.twitchEmbed(out)],
+                        ephemeral: true
+                    });
+                });
+                break;
             default:
                 interaction.reply({
-                    content: ':warning: Unknown or unsupported streaming site. Available options: Picarto, Piczel',
+                    content: ':warning: Unknown or unsupported streaming site. Available options: Picarto, Piczel, Twitch',
                     ephemeral: true
                 });
             //end
