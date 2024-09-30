@@ -45,7 +45,7 @@ class Notifier {
             .setColor(0x09a5c9)
             .setTitle(data.data[0]['username'])
             .setDescription(data.data[0]['title'])
-            .setURL(`https://picarto.tv/${data.data[0]['slug']}`)
+            .setURL(`https://piczel.tv/watch/${data.data[0]['slug']}`)
             .setThumbnail(data.data[0]['user']['avatar']['url'])
             .addFields(
                 { name: "Status", value: `${isOnline}`, inline: true },
