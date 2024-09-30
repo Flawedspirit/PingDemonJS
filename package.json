@@ -1,6 +1,6 @@
 {
   "name": "ping-demon",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "I ping people when that one streamer they like goes live.",
   "main": "./app/app.js",
   "scripts": {
