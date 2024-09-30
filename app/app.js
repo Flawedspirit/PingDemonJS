@@ -130,7 +130,7 @@ async function pingAPI() {
                             notifiedOf.push(status.data[0]['slug']);
                         } else {
                             if(status.data[0]['live'] === false) {
-                                const toRemove = notifiedOf.indexOf(status.name);
+                                const toRemove = notifiedOf.indexOf(status.data[0]['slug']);
                                 if(toRemove !== -1) {
                                     notifiedOf.splice(toRemove, 1);
                                     if(debug) client.logger.logDebug(`We have removed ${status.data[0]['slug']} from notifiedOf[]`);
