@@ -76,85 +76,77 @@ async function pingAPI() {
         try {
             // PICARTO
             if(notify.picarto) {
-                try {
-                    for(let user in notify.picarto) {
-                        await PicartoAPI.getAPIReturn(notify.picarto[user][0]).then((status) => {
-                            currentState.set(status.name, {'name': status.name, 'isOnline': status.online});
+                for(let user in notify.picarto) {
+                    await PicartoAPI.getAPIReturn(notify.picarto[user][0]).then((status) => {
+                        currentState.set(status.name, {'name': status.name, 'isOnline': status.online});
 
-                            if(!notifiedOf.includes(status.name) && status.online === true) {
-                                // Notify everyone here
-                                client.channels.fetch(notifyChannel).then(channel => {
-                                    // Ping users with the supplied role IDs of each streamer
-                                    try {
-                                        client.logger.log(`${status.name} is now online.`);
-                                        channel.send({ content: `<@&${notify.picarto[user][1]}>`, embeds: [Notifier.picartoEmbed(status)] });
-                                    } catch(error) {
-                                        client.logger.logError(error);
-                                    }
-                                }).catch((error) => {
+                        if(!notifiedOf.includes(status.name) && status.online === true) {
+                            // Notify everyone here
+                            client.channels.fetch(notifyChannel).then(channel => {
+                                // Ping users with the supplied role IDs of each streamer
+                                try {
+                                    client.logger.log(`${status.name} is now online.`);
+                                    channel.send({ content: `<@&${notify.picarto[user][1]}>`, embeds: [Notifier.picartoEmbed(status)] });
+                                } catch(error) {
                                     client.logger.logError(error);
-                                });
+                                }
+                            }).catch((error) => {
+                                client.logger.logError(error);
+                            });
 
-                                notifiedOf.push(status.name);
-                            } else {
-                                if(status.online === false) {
-                                    const toRemove = notifiedOf.indexOf(status.name);
-                                    if(toRemove !== -1) {
-                                        notifiedOf.splice(toRemove, 1);
-                                        if(debug) client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
-                                    }
+                            notifiedOf.push(status.name);
+                        } else {
+                            if(status.online === false) {
+                                const toRemove = notifiedOf.indexOf(status.name);
+                                if(toRemove !== -1) {
+                                    notifiedOf.splice(toRemove, 1);
+                                    if(debug) client.logger.logDebug(`We have removed ${status.name} from notifiedOf[]`);
                                 }
                             }
-                        });
-                    }
-                } catch(error) {
-                    // Do nothing
+                        }
+                    });
                 }
             }
 
             // PICZEL
             if(notify.piczel) {
                 for(let user in notify.piczel) {
-                    try {
-                        await PiczelAPI.getAPIReturn(notify.piczel[user][0]).then((status) => {
-                            currentState.set(status.data[0]['slug'], {'name': status.data[0]['slug'], 'isOnline': status.data[0]['live']});
+                    await PiczelAPI.getAPIReturn(notify.piczel[user][0]).then((status) => {
+                        currentState.set(status.data[0]['slug'], {'name': status.data[0]['slug'], 'isOnline': status.data[0]['live']});
 
-                            if(!notifiedOf.includes(status.data[0]['slug']) && status.data[0]['live'] === true) {
-                                // Notify everyone here
-                                client.channels.fetch(notifyChannel).then(channel => {
-                                    // Ping users with the supplied role IDs of each streamer
-                                    try {
-                                        client.logger.log(`${status.data[0]['slug']} is now online.`);
-                                        channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)]});
-                                    } catch(error) {
-                                        client.logger.logError(error);
-                                    }
-                                }).catch((error) => {
+                        if(!notifiedOf.includes(status.data[0]['slug']) && status.data[0]['live'] === true) {
+                            // Notify everyone here
+                            client.channels.fetch(notifyChannel).then(channel => {
+                                // Ping users with the supplied role IDs of each streamer
+                                try {
+                                    client.logger.log(`${status.data[0]['slug']} is now online.`);
+                                    channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)]});
+                                } catch(error) {
                                     client.logger.logError(error);
-                                });
+                                }
+                            }).catch((error) => {
+                                client.logger.logError(error);
+                            });
 
-                                notifiedOf.push(status.data[0]['slug']);
-                            } else {
-                                if(status.data[0]['live'] === false) {
-                                    const toRemove = notifiedOf.indexOf(status.data[0]['slug']);
-                                    if(toRemove !== -1) {
-                                        notifiedOf.splice(toRemove, 1);
-                                        if(debug) client.logger.logDebug(`We have removed ${status.data[0]['slug']} from notifiedOf[]`);
-                                    }
+                            notifiedOf.push(status.data[0]['slug']);
+                        } else {
+                            if(status.data[0]['live'] === false) {
+                                const toRemove = notifiedOf.indexOf(status.data[0]['slug']);
+                                if(toRemove !== -1) {
+                                    notifiedOf.splice(toRemove, 1);
+                                    if(debug) client.logger.logDebug(`We have removed ${status.data[0]['slug']} from notifiedOf[]`);
                                 }
                             }
-                        });
-                    } catch(error) {
-                        // Do nothing
-                    }
+                        }
+                    });
                 }
             }
 
             // TWITCH
             if(notify.twitch) {
                 for(let user in notify.twitch) {
-                    try {
-                        await TwitchAPI.getAPIReturn(notify.twitch[user][0]).then((status) => {
+                    await TwitchAPI.getAPIReturn(notify.twitch[user][0]).then((status) => {
+                        if(status.data && status.data.length) {
                             currentState.set(status.data[0]['user_name'], {'name': status.data[0]['user_name'], 'isOnline': (status.data[0]['type'] === 'live')});
 
                             if(!notifiedOf.includes(status.data[0]['user_name']) && (status.data[0]['type'] === 'live')) {
@@ -163,7 +155,9 @@ async function pingAPI() {
                                     // Ping users with the supplied role IDs of each streamer
                                     try {
                                         client.logger.log(`${status.data[0]['user_name']} is now online.`);
-                                        channel.send({ content: `<@&${notify.twitch[user][1]}>`, embeds: [Notifier.twitchEmbed(status)]});
+                                        channel.send({
+                                            content: `<@&${notify.twitch[user][1]}>`,
+                                            embeds: [Notifier.twitchEmbed(status)]});
                                     } catch(error) {
                                         client.logger.logError(error);
                                     }
@@ -181,10 +175,8 @@ async function pingAPI() {
                                     }
                                 }
                             }
-                        });
-                    } catch(error) {
-                        // Do nothing
-                    }
+                        }
+                    });
                 }
             }
 

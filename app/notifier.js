@@ -1,5 +1,5 @@
 const path = require('node:path');
-const { EmbedBuilder, MessageAttachment } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 /**
  * @class
@@ -72,11 +72,11 @@ class Notifier {
         preview = preview.replace('{width}x{height}', `1200x675`);
 
         let embed = new EmbedBuilder()
-            .setColor(0x6441a5)
+            .setColor(0x9146ff)
             .setTitle(data.data[0]['user_name'])
             .setDescription(data.data[0]['title'])
             .setURL(`https://twitch.tv/${data.data[0]['user_name']}`)
-            .setThumbnail('https://files.flawedspirit.ca/ping-demon/assets/glitch_flat_purple.png')
+            .setThumbnail('https://res.cloudinary.com/startup-grind/image/upload/h_250,w_250/v1/gcs/platform-data-twitch/contentbuilder/avatar_default.png')
             .addFields(
                 { name: "Status", value: `${isOnline}`, inline: true },
                 { name: "Watching", value: `${data.data[0]['viewer_count']}`, inline: true }
