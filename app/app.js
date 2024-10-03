@@ -146,6 +146,7 @@ async function pingAPI() {
             if(notify.twitch) {
                 for(let user in notify.twitch) {
                     await TwitchAPI.getAPIReturn(notify.twitch[user][0]).then((status) => {
+                        // Special handling for Twitch as Twitch returns an empty array if streamer is offline
                         if(status.data && status.data.length) {
                             currentState.set(status.data[0]['user_name'], {'name': status.data[0]['user_name'], 'isOnline': (status.data[0]['type'] === 'live')});
 
@@ -159,10 +160,10 @@ async function pingAPI() {
                                             content: `<@&${notify.twitch[user][1]}>`,
                                             embeds: [Notifier.twitchEmbed(status)]});
                                     } catch(error) {
-                                        client.logger.logError(error);
+                                        client.logger.logError(`${error}\n${error.stack}`);
                                     }
                                 }).catch((error) => {
-                                    client.logger.logError(error);
+                                    client.logger.logError(`${error}\n${error.stack}`);
                                 });
 
                                 notifiedOf.push(status.data[0]['user_name']);
@@ -175,6 +176,8 @@ async function pingAPI() {
                                     }
                                 }
                             }
+                        } else {
+                            currentState.set(notify.twitch[user][0], {'name': notify.twitch[user][0], 'isOnline': false});
                         }
                     });
                 }

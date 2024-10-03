@@ -26,7 +26,7 @@ class TwitchAPI {
             if(response.ok) {
                 accessToken = token.access_token;
             } else {
-                console.error(`Error getting token: ${error}\n${error.stack}`);
+                console.error(`Error getting token: ${response.status}`);
             }
         } catch(error) {
             console.error(`Request failed: ${error}\n${error.stack}`);
@@ -48,7 +48,7 @@ class TwitchAPI {
             if(response.ok && out) {
                 return out;
             } else {
-                console.error(`Request failed: ${error}\n${error.stack}`);
+                console.error(`Request failed: ${response.status}`);
             }
         } catch(error) {
             console.error(`Request failed: ${error}\n${error.stack}`);
