@@ -1,14 +1,18 @@
 {
     "token": "<bot_token>",
+    "client_id": "<client_id>",
     "notify": {
         "picarto": [
             ["<user>", "<roleid_to_ping>"]
         ],
-        "piczel": [
-            ["<user>", "<roleid_to_ping>"]
-        ]
+        "piczel": [],
+        "twitch": []
     },
-    "notifyChannel": "<channelid_to_ping>",
+    "twitchAPI": {
+        "secret": "",
+        "client_id": ""
+    },
+    "notifyChannel": "<notify_in_channel>",
     "pingRate": 10,
     "logTimestamps": true,
     "debug": false

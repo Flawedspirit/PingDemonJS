@@ -10,6 +10,7 @@ const Logger = require('./logger.js');
 const Notifier = require('./notifier.js');
 const PicartoAPI = require('./picartoAPI.js');
 const PiczelAPI = require('./piczelAPI.js');
+const TwitchAPI = require('./twitchAPI.js');
 
 // Create new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -119,7 +120,7 @@ async function pingAPI() {
                                 // Ping users with the supplied role IDs of each streamer
                                 try {
                                     client.logger.log(`${status.data[0]['slug']} is now online.`);
-                                    channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)] });
+                                    channel.send({ content: `<@&${notify.piczel[user][1]}>`, embeds: [Notifier.piczelEmbed(status)]});
                                 } catch(error) {
                                     client.logger.logError(error);
                                 }
@@ -136,6 +137,47 @@ async function pingAPI() {
                                     if(debug) client.logger.logDebug(`We have removed ${status.data[0]['slug']} from notifiedOf[]`);
                                 }
                             }
+                        }
+                    });
+                }
+            }
+
+            // TWITCH
+            if(notify.twitch) {
+                for(let user in notify.twitch) {
+                    await TwitchAPI.getAPIReturn(notify.twitch[user][0]).then((status) => {
+                        // Special handling for Twitch as Twitch returns an empty array if streamer is offline
+                        if(status.data && status.data.length) {
+                            currentState.set(status.data[0]['user_name'], {'name': status.data[0]['user_name'], 'isOnline': (status.data[0]['type'] === 'live')});
+
+                            if(!notifiedOf.includes(status.data[0]['user_name']) && (status.data[0]['type'] === 'live')) {
+                                // Notify everyone here
+                                client.channels.fetch(notifyChannel).then(channel => {
+                                    // Ping users with the supplied role IDs of each streamer
+                                    try {
+                                        client.logger.log(`${status.data[0]['user_name']} is now online.`);
+                                        channel.send({
+                                            content: `<@&${notify.twitch[user][1]}>`,
+                                            embeds: [Notifier.twitchEmbed(status)]});
+                                    } catch(error) {
+                                        client.logger.logError(`${error}\n${error.stack}`);
+                                    }
+                                }).catch((error) => {
+                                    client.logger.logError(`${error}\n${error.stack}`);
+                                });
+
+                                notifiedOf.push(status.data[0]['user_name']);
+                            } else {
+                                if(!(status.data[0]['type'] === 'live')) {
+                                    const toRemove = notifiedOf.indexOf(status.data[0]['user_name']);
+                                    if(toRemove !== -1) {
+                                        notifiedOf.splice(toRemove, 1);
+                                        if(debug) client.logger.logDebug(`We have removed ${status.data[0]['user_name']} from notifiedOf[]`);
+                                    }
+                                }
+                            }
+                        } else {
+                            currentState.set(notify.twitch[user][0], {'name': notify.twitch[user][0], 'isOnline': false});
                         }
                     });
                 }

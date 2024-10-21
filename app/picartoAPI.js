@@ -8,13 +8,5 @@ class PicartoAPI {
 
         return response.json();
     }
-
-    static async PingPicarto (name) {
-        PicartoAPI.getAPIReturn(name).then(function (out) {
-            if (out.toString() !== 'Channel does not exist') {
-                return out;
-            }
-        });
-    }
 }
 module.exports = PicartoAPI;

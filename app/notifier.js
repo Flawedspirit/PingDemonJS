@@ -1,3 +1,4 @@
+const path = require('node:path');
 const { EmbedBuilder } = require('discord.js');
 
 /**
@@ -53,6 +54,34 @@ class Notifier {
                 { name: "Watching", value: `${data.data[0]['viewers']}`, inline: true }
             )
             .setImage(`${data.data[0]['preview']['url']}?t=${time}`)
+            .setFooter({ text: matureContent });
+        return embed;
+    }
+
+    /**
+     * Constructs and returns a Twitch ping embed
+     * @param {Object} data A JSON object of stream data returned from the API.
+     * @returns {EmbedBuilder}
+     */
+    static twitchEmbed(data) {
+        let isOnline = (data.data[0]['type'] === 'live') ? ":red_circle: ONLINE" : "OFFLINE";
+        let matureContent = data.data[0]['is_mature'] ? "Mature content" : "Safe content";
+        let time = Date.now();
+
+        let preview = data.data[0]['thumbnail_url'];
+        preview = preview.replace('{width}x{height}', `1200x675`);
+
+        let embed = new EmbedBuilder()
+            .setColor(0x9146ff)
+            .setTitle(data.data[0]['user_name'])
+            .setDescription(data.data[0]['title'])
+            .setURL(`https://twitch.tv/${data.data[0]['user_name']}`)
+            .setThumbnail('https://res.cloudinary.com/startup-grind/image/upload/h_250,w_250/v1/gcs/platform-data-twitch/contentbuilder/avatar_default.png')
+            .addFields(
+                { name: "Status", value: `${isOnline}`, inline: true },
+                { name: "Watching", value: `${data.data[0]['viewer_count']}`, inline: true }
+            )
+            .setImage(`${preview}?t=${time}`)
             .setFooter({ text: matureContent });
         return embed;
     }
