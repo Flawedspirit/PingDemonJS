@@ -1,9 +1,9 @@
 # Ping Demon
 ## A bot for monitoring Picarto and Piczel streamers
 
-(Twitch and Youtube support coming Soon™️)
+(Youtube support coming Soon™️)
 
-![Static Badge](https://img.shields.io/badge/Ping%20Demon-1.2.1-darkred)
+![Static Badge](https://img.shields.io/badge/Ping%20Demon-1.2.2-darkred)
 
 ### Getting Started
 **Note:** This guide assumes you are familiar with the concept of creating a Discord application, as well as developer mode in Discord.
@@ -21,10 +21,10 @@ Run the following commands:\
 
 **3. Configure the Bot**\
 Rename or copy the `config.json.dist` file to `config.json`.\
-By default, the bot works with RoleIDs to ping specific roles when a streamer comes online, as well a provided ChannelID to post notifications in.
+By default, the bot works with RoleIDs to ping specific roles when a streamer comes online, as well a provided ChannelID to post notifications in. RoleIDs can be copied by right clicking a role in your server settings panel and clicking `Copy Role ID`. ChannelIDs can be gotten the same way, but with channels.
 The following fields need to be updated to work for your server:\
 - `token`: Your Discord application token from step 1.
-- `notify["picarto/piczel"]`: Provide an array of a user and RoleID to ping for that user, ie `["username", "123456789123456789"]`.
+- `notify["picarto/piczel/twitch"]`: Provide an array of a user and RoleID to ping for that user, ie `["username", "123456789123456789"]`.
 - `notifyChannel`: Provide a channel ID for the bot to post messages in.
 - `pingRate`: The rate in seconds to ping the streaming service APIs. Defaults to 10 seconds. The minimum allowed value is 5 seconds.\
 The remaining fields can be left as-is.

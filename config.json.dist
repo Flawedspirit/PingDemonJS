@@ -1,6 +1,7 @@
 {
     "token": "<bot_token>",
     "client_id": "<client_id>",
+    "watching_message": "your favourite streamers!",
     "notify": {
         "picarto": [
             ["<user>", "<roleid_to_ping>"]
