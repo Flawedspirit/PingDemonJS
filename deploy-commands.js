@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { REST, Routes } = require('discord.js');
-const { client_id, logTimestamps, token } = require('./config.json');
+const { clientId, logTimestamps, token } = require('./config.json');
 
 const Logger = require('./app/logger.js');
 logger = new Logger(logTimestamps);
@@ -38,7 +38,7 @@ const rest = new REST().setToken(token);
         logger.log(`Registering ${commands.length} application (/) commands.`);
 
         await rest.put(
-            Routes.applicationCommands(client_id), { body: commands }
+            Routes.applicationCommands(clientId), { body: commands }
         );
         logger.log(`Successfully registered application (/) commands.`);
     } catch(error) {
